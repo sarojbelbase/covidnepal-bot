@@ -3,6 +3,10 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from dotenv import load_dotenv
 import os
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+dotenvsecrets = os.path.join(basedir, '.env')
+load_dotenv(dotenvsecrets)
+
 PORT = int(os.environ.get('PORT', 5000))
 
 # Enable logging
