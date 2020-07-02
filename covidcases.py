@@ -8,7 +8,7 @@ def padding(any_num):
     if int(any_num) < 10:
         return '0' + str(any_num)
     else:
-        return f"{any_num:,}"
+        return f"{int(any_num):,}"
 
 
 def humanize_date(any_date):
