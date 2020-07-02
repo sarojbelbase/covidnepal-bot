@@ -1,3 +1,5 @@
 venv/
 .env
 .vscode
+rough.py
+works.py

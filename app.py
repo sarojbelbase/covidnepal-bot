@@ -1,5 +1,6 @@
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates
 from dotenv import load_dotenv
 import os
 
@@ -19,16 +20,6 @@ TOKEN = os.environ.get('TOKEN')
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
-
-
-def start(update, context):
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
-
-
-def help(update, context):
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
 
 
 def echo(update, context):
@@ -52,8 +43,11 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("website", get_website))
+    dp.add_handler(CommandHandler("about", get_about))
+    dp.add_handler(CommandHandler("today", get_today_updates))
+    dp.add_handler(CommandHandler("updates", get_local_updates))
+    dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
@@ -65,6 +59,8 @@ def main():
     updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
 
     updater.bot.setWebhook('https://covidnepal-bot.herokuapp.com/' + TOKEN)
+
+    # updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
