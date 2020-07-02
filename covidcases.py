@@ -15,7 +15,7 @@ def humanize_date(any_date):
     return arrow.get(any_date).replace(tzinfo=timezone.utc).humanize()
 
 
-def get_province_updates(update, context, province_id=5):
+def get_province_updates(province_id):
     province = requests.get(
         f"https://covidapi.mohp.gov.np/api/v1/stats/?province={int(province_id)}"
     ).json()
@@ -28,7 +28,7 @@ Deaths : {padding(province["total_death"])}
 
 Updated {humanize_date(province["update_date"])} 
     '''
-    update.message.reply_text(improved)
+    return improved
 
 
 def get_today_updates(update, context):

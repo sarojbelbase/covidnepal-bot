@@ -1,5 +1,6 @@
 import logging
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates, get_province_updates
 from dotenv import load_dotenv
 import os
@@ -20,6 +21,26 @@ TOKEN = os.environ.get('TOKEN')
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
+
+
+def province_chooser(update, context):
+    keyboard = [[InlineKeyboardButton("Province 1", callback_data='1'),
+                 InlineKeyboardButton("Province 2", callback_data='2')],
+                [InlineKeyboardButton("Bagmati Province", callback_data='3'),
+                 InlineKeyboardButton("Gandaki Province", callback_data='4')],
+                [InlineKeyboardButton("Province 5", callback_data='5'),
+                 InlineKeyboardButton("Karnali Province", callback_data='6')],
+                [InlineKeyboardButton("Sudurpaschim Province", callback_data='7')]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text(
+        'Please choose a province to see updates:', reply_markup=reply_markup)
+
+
+def send_province(update, context):
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(get_province_updates(query.data))
 
 
 def echo(update, context):
@@ -48,7 +69,8 @@ def main():
     dp.add_handler(CommandHandler("today", get_today_updates))
     dp.add_handler(CommandHandler("updates", get_local_updates))
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
-    dp.add_handler(CommandHandler("provinces", get_province_updates))
+    dp.add_handler(CommandHandler("provinces", province_chooser))
+    dp.add_handler(CallbackQueryHandler(send_province))
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
 
@@ -56,11 +78,11 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
-    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
+    # updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
 
-    updater.bot.setWebhook('https://covidnepal-bot.herokuapp.com/' + TOKEN)
+    # updater.bot.setWebhook('https://covidnepal-bot.herokuapp.com/' + TOKEN)
 
-    # updater.start_polling()
+    updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
