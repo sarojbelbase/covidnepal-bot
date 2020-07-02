@@ -22,6 +22,33 @@ TOKEN = os.environ.get('TOKEN')
 # context. Error handlers also receive the raised TelegramError object in error.
 
 
+def inlinequery(update, context):
+    """Handle the inline query."""
+    query = update.inline_query.query
+    results = [
+        InlineQueryResultArticle(
+            id=uuid4(),
+            title="updates",
+            input_message_content=InputTextMessageContent(get_local_updates())),
+        InlineQueryResultArticle(
+            id=uuid4(),
+            title="website",
+            input_message_content=InputTextMessageContent(get_website())),
+        InlineQueryResultArticle(
+            id=uuid4(),
+            title="about",
+            input_message_content=InputTextMessageContent(get_about())),
+        InlineQueryResultArticle(
+            id=uuid4(),
+            title="today",
+            input_message_content=InputTextMessageContent(get_today_updates())),
+        InlineQueryResultArticle(
+            id=uuid4(),
+            title="worldwide",
+            input_message_content=InputTextMessageContent(get_world_updates())),
+    ]
+    update.inline_query.answer(results)
+
 
 def echo(update, context):
     """Echo the user message."""
@@ -51,6 +78,7 @@ def main():
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
     # on noncommand i.e message - echo the message on Telegram
+    dp.add_handler(InlineQueryHandler(inlinequery))
     dp.add_handler(MessageHandler(Filters.text, echo))
 
     # log all errors
