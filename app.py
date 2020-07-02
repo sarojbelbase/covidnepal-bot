@@ -48,7 +48,7 @@ def main():
     dp.add_handler(CommandHandler("today", get_today_updates))
     dp.add_handler(CommandHandler("updates", get_local_updates))
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
-    dp.add_handler(CommandHandler("provinces", get_provinces_updates))
+    dp.add_handler(CommandHandler("provinces", get_province_updates))
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
 
