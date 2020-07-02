@@ -15,6 +15,22 @@ def humanize_date(any_date):
     return arrow.get(any_date).replace(tzinfo=timezone.utc).humanize()
 
 
+def get_province_updates(update, context, province_id=5):
+    province = requests.get(
+        f"https://covidapi.mohp.gov.np/api/v1/stats/?province={int(province_id)}"
+    ).json()
+    province = province[0]
+    improved = f'''{province["province_name"]}'s Covid Updates:
+
+Positive : {padding(province["total_positive"])}
+Recovered : {padding(province["total_recovered"])}
+Deaths : {padding(province["total_death"])}
+
+Updated {humanize_date(province["update_date"])} 
+    '''
+    update.message.reply_text(improved)
+
+
 def get_today_updates(update, context):
     updates = requests.get(
         'https://covid19.mohp.gov.np/covid/api/confirmedcases').json()["nepal"]

@@ -1,6 +1,6 @@
 import logging
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler
-from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates, get_province_updates
 from dotenv import load_dotenv
 import os
 
@@ -20,34 +20,6 @@ TOKEN = os.environ.get('TOKEN')
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
-
-
-def inlinequery(update, context):
-    """Handle the inline query."""
-    query = update.inline_query.query
-    results = [
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="updates",
-            input_message_content=InputTextMessageContent(get_local_updates())),
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="website",
-            input_message_content=InputTextMessageContent(get_website())),
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="about",
-            input_message_content=InputTextMessageContent(get_about())),
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="today",
-            input_message_content=InputTextMessageContent(get_today_updates())),
-        InlineQueryResultArticle(
-            id=uuid4(),
-            title="worldwide",
-            input_message_content=InputTextMessageContent(get_world_updates())),
-    ]
-    update.inline_query.answer(results)
 
 
 def echo(update, context):
@@ -76,9 +48,8 @@ def main():
     dp.add_handler(CommandHandler("today", get_today_updates))
     dp.add_handler(CommandHandler("updates", get_local_updates))
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
-
+    dp.add_handler(CommandHandler("provinces", get_provinces_updates))
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(InlineQueryHandler(inlinequery))
     dp.add_handler(MessageHandler(Filters.text, echo))
 
     # log all errors
