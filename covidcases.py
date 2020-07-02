@@ -1,11 +1,18 @@
 import arrow
 import requests
 from dateutil import tz
-from datetime import datetime
+from datetime import datetime, timezone
+
+
+def padding(any_num):
+    if int(any_num) < 10:
+        return '0' + str(any_num)
+    else:
+        return f"{any_num:,}"
 
 
 def humanize_date(any_date):
-    return arrow.get(any_date).humanize()
+    return arrow.get(any_date).replace(tzinfo=timezone.utc).humanize()
 
 
 def get_today_updates(update, context):
@@ -13,10 +20,10 @@ def get_today_updates(update, context):
         'https://covid19.mohp.gov.np/covid/api/confirmedcases').json()["nepal"]
     improved = f'''Today's Covid Updates:
 
-Tested : {updates['today_pcr']}
-Positive : {updates['today_newcase']}
-Recovered : {updates['today_recovered']}
-Deaths : {updates['today_death']}
+Tested : {padding(updates['today_pcr'])}
+Positive : {padding(updates['today_newcase'])}
+Recovered : {padding(updates['today_recovered'])}
+Deaths : {padding(updates['today_death'])}
 
 Updated  {humanize_date(updates['updated_at'])}
 '''
@@ -27,12 +34,12 @@ def get_local_updates(update, context):
     updates = requests.get(
         'https://covid19.mohp.gov.np/covid/api/confirmedcases').json()["nepal"]
 
-    improved = f'''Nepali Covid Updates:
+    improved = f'''Nepal's Covid Updates:
 
-Tested : {updates['samples_tested']}
-Positive : {updates['positive']}
-Recovered : {updates['extra1']}
-Deaths : {updates['deaths']}
+Tested : {padding(updates['samples_tested'])}
+Positive : {padding(updates['positive'])}
+Recovered : {padding(updates['extra1'])}
+Deaths : {padding(updates['deaths'])}
 
 Updated {humanize_date(updates['updated_at'])}
 '''
@@ -44,10 +51,10 @@ def get_world_updates(update, context):
         'https://data.nepalcorona.info/api/v1/world').json()
     improved = f'''Worldwide Covid Updates:
 
-Tested : {updates['tests']}
-Positive : {updates['cases']}
-Recovered : {updates['recovered']}
-Deaths : {updates['deaths']}
+Tested : {padding(updates['tests'])}
+Positive : {padding(updates['cases'])}
+Recovered : {padding(updates['recovered'])}
+Deaths : {padding(updates['deaths'])}
 
 Updated {humanize_date(datetime.fromtimestamp(int(updates['updated']/1000)))}
 '''
