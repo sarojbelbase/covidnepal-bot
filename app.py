@@ -1,5 +1,5 @@
 import logging
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler
 from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates
 from dotenv import load_dotenv
 import os
