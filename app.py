@@ -1,6 +1,6 @@
 import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackQueryHandler
 from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates, get_province_updates
 from dotenv import load_dotenv
 import os
@@ -48,7 +48,26 @@ def send_help(update, context):
 /today - Get today's updates
 /worldwide - Get worldwide updates
 /about - About this bot
-/help - help messages
+/help - To get help messages
+/website - Go to website
+
+covidnepal_bot • Version 1.2.0
+    '''
+    update.message.reply_text(help_commands)
+
+
+def start(update, context):
+    user = update.message.from_user.first_name
+    help_commands = f'''Hello {user}, welcome to covidnepal.
+
+Please, type the following commands to get started:
+
+/updates - Get local updates
+/provinces - Get province updates
+/today - Get today's updates
+/worldwide - Get worldwide updates
+/about - About this bot
+/help - To get help messages
 /website - Go to website
 
 covidnepal_bot • Version 1.2.0
@@ -65,15 +84,16 @@ def main():
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
-    dp.add_handler(CommandHandler("website", get_website))
+    dp.add_error_handler(error)
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", send_help))
+    dp.add_handler(CallbackQueryHandler(send_province))
     dp.add_handler(CommandHandler("about", get_about))
+    dp.add_handler(CommandHandler("website", get_website))
     dp.add_handler(CommandHandler("today", get_today_updates))
     dp.add_handler(CommandHandler("updates", get_local_updates))
-    dp.add_handler(CommandHandler("worldwide", get_world_updates))
     dp.add_handler(CommandHandler("provinces", province_chooser))
-    dp.add_handler(CallbackQueryHandler(send_province))
-    dp.add_handler(MessageHandler("help", send_help))
-    dp.add_error_handler(error)
+    dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
     updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
     updater.bot.setWebhook('https://covidnepal-bot.herokuapp.com/' + TOKEN)
