@@ -58,9 +58,9 @@ covidnepal_bot • Version 1.2.0
 
 def start(update, context):
     user = update.message.from_user.first_name
-    help_commands = f'''Hello {user}, welcome to covidnepal.
+    help_commands = f'''Hello {user}, Welcome to covidnepal.
 
-Please, type the following commands to get started:
+Please type the following commands to get started:
 
 /updates - Get local updates
 /provinces - Get province updates

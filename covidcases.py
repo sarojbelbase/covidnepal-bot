@@ -22,6 +22,7 @@ def get_province_updates(province_id):
     province = province[0]
     improved = f'''{province["province_name"]}'s Covid Updates:
 
+Tested : {padding(province["total_tested"])}
 Positive : {padding(province["total_positive"])}
 Recovered : {padding(province["total_recovered"])}
 Deaths : {padding(province["total_death"])}
