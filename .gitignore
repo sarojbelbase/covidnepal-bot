@@ -3,3 +3,4 @@ venv/
 .vscode
 rough.py
 works.py
+__pycache__

@@ -15,6 +15,10 @@ def humanize_date(any_date):
     return arrow.get(any_date).replace(tzinfo=timezone.utc).humanize()
 
 
+def humanize_nonutc(any_date):
+    return arrow.get(any_date).humanize()
+
+
 def get_province_updates(province_id):
     province = requests.get(
         f"https://covidapi.mohp.gov.np/api/v1/stats/?province={int(province_id)}"
@@ -42,7 +46,7 @@ Positive : {padding(updates['today_newcase'])}
 Recovered : {padding(updates['today_recovered'])}
 Deaths : {padding(updates['today_death'])}
 
-Updated  {humanize_date(updates['updated_at'])}
+Updated {humanize_nonutc(updates['updated_at'])}
 '''
     update.message.reply_text(improved)
 
@@ -58,7 +62,7 @@ Positive : {padding(updates['positive'])}
 Recovered : {padding(updates['extra1'])}
 Deaths : {padding(updates['deaths'])}
 
-Updated {humanize_date(updates['updated_at'])}
+Updated {humanize_nonutc(updates['updated_at'])}
 '''
     update.message.reply_text(improved)
 
