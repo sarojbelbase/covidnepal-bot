@@ -1,7 +1,6 @@
 import arrow
 import requests
-from dateutil import tz
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 def padding(any_num):
@@ -12,11 +11,11 @@ def padding(any_num):
 
 
 def humanize_date(any_date):
-    return arrow.get(any_date).replace(tzinfo=timezone.utc).humanize()
+    return arrow.get(any_date).to('US/Pacific').humanize()
 
 
-def humanize_nonutc(any_date):
-    return arrow.get(any_date).humanize()
+def humanize_local_date(any_local_date):
+    return arrow.get(any_local_date).shift(minutes=-345).to('US/Pacific').humanize()
 
 
 def get_province_updates(province_id):
@@ -46,7 +45,7 @@ Positive : {padding(updates['today_newcase'])}
 Recovered : {padding(updates['today_recovered'])}
 Deaths : {padding(updates['today_death'])}
 
-Updated {humanize_nonutc(updates['updated_at'])}
+Updated {humanize_local_date(updates['updated_at'])}
 '''
     update.message.reply_text(improved)
 
@@ -62,7 +61,7 @@ Positive : {padding(updates['positive'])}
 Recovered : {padding(updates['extra1'])}
 Deaths : {padding(updates['deaths'])}
 
-Updated {humanize_nonutc(updates['updated_at'])}
+Updated {humanize_local_date(updates['updated_at'])}
 '''
     update.message.reply_text(improved)
 
@@ -77,7 +76,7 @@ Positive : {padding(updates['cases'])}
 Recovered : {padding(updates['recovered'])}
 Deaths : {padding(updates['deaths'])}
 
-Updated {humanize_date(datetime.fromtimestamp(int(updates['updated']/1000)))}
+Updated {humanize_date(datetime.utcfromtimestamp(int(updates['updated']/1000)))}
 '''
     update.message.reply_text(improved)
 
