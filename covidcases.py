@@ -1,28 +1,11 @@
-import arrow
 import requests
 from datetime import datetime
-
-
-def padding(any_num):
-    if int(any_num) < 10:
-        return '0' + str(any_num)
-    else:
-        return f"{int(any_num):,}"
-
-
-def humanize_date(any_date):
-    return arrow.get(any_date).to('US/Pacific').humanize()
-
-
-def humanize_local_date(any_local_date):
-    return arrow.get(any_local_date).shift(minutes=-345).to('US/Pacific').humanize()
+from utils import padding, humanize_date, humanize_local_date
 
 
 def get_province_updates(province_id):
-    url = "https://aworkingapi.herokuapp.com/api/v1/covid/province/" + \
-        int(province_id)
+    url = f"https://aworkingapi.herokuapp.com/api/v1/covid/province/{int(province_id)}"
     province = requests.get(url).json()
-    province = province[0]
     improved = f'''{province["name"]}'s Covid Updates:
 
 Tested : {padding(province["tested"])}

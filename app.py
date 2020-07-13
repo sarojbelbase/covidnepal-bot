@@ -51,7 +51,7 @@ def send_help(update, context):
 /help - To get help messages
 /website - Go to website
 
-covidnepal_bot • Version 1.2.0
+covidnepal_bot • Version 1.2.2
     '''
     update.message.reply_text(help_commands)
 
@@ -70,7 +70,7 @@ Please type the following commands to get started:
 /help - To get help messages
 /website - Go to website
 
-covidnepal_bot • Version 1.2.0
+covidnepal_bot • Version 1.2.2
     '''
     update.message.reply_text(help_commands)
 
