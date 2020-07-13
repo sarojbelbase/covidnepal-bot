@@ -19,25 +19,25 @@ def humanize_local_date(any_local_date):
 
 
 def get_province_updates(province_id):
-    province = requests.get(
-        f"https://covidapi.mohp.gov.np/api/v1/stats/?province={int(province_id)}"
-    ).json()
+    url = "https://aworkingapi.herokuapp.com/api/v1/covid/province/" + \
+        int(province_id)
+    province = requests.get(url).json()
     province = province[0]
-    improved = f'''{province["province_name"]}'s Covid Updates:
+    improved = f'''{province["name"]}'s Covid Updates:
 
-Tested : {padding(province["total_tested"])}
-Positive : {padding(province["total_positive"])}
-Recovered : {padding(province["total_recovered"])}
-Deaths : {padding(province["total_death"])}
+Tested : {padding(province["tested"])}
+Positive : {padding(province["cases"])}
+Recovered : {padding(province["recovered"])}
+Deaths : {padding(province["deaths"])}
 
-Updated {humanize_date(province["update_date"])} 
+Updated {humanize_date(province["last_updated"])} 
     '''
     return improved
 
 
 def get_today_updates(update, context):
-    updates = requests.get(
-        'https://covid19.mohp.gov.np/covid/api/confirmedcases').json()["nepal"]
+    url = 'https://covid19.mohp.gov.np/covid/api/confirmedcases'
+    updates = requests.get(url).json()["nepal"]
     improved = f'''Today's Covid Updates:
 
 Tested : {padding(updates['today_pcr'])}
@@ -51,9 +51,8 @@ Updated {humanize_local_date(updates['updated_at'])}
 
 
 def get_local_updates(update, context):
-    updates = requests.get(
-        'https://covid19.mohp.gov.np/covid/api/confirmedcases').json()["nepal"]
-
+    url = 'https://covid19.mohp.gov.np/covid/api/confirmedcases'
+    updates = requests.get(url).json()["nepal"]
     improved = f'''Nepal's Covid Updates:
 
 Tested : {padding(updates['samples_tested'])}
@@ -67,8 +66,8 @@ Updated {humanize_local_date(updates['updated_at'])}
 
 
 def get_world_updates(update, context):
-    updates = requests.get(
-        'https://data.nepalcorona.info/api/v1/world').json()
+    url = 'https://data.nepalcorona.info/api/v1/world'
+    updates = requests.get(url).json()
     improved = f'''Worldwide Covid Updates:
 
 Tested : {padding(updates['tests'])}
@@ -82,13 +81,14 @@ Updated {humanize_date(datetime.utcfromtimestamp(int(updates['updated']/1000)))}
 
 
 def get_website(update, context):
-    update.message.reply_text("https://covidnepal.now.sh")
+    url = "https://covidnepal.now.sh"
+    update.message.reply_text(url)
 
 
 def get_about(update, context):
     about = f'''Telegram bot that provides you detailed look at COVID-19 cases inside Nepal.
 Web version lives at: https://covidnepal.now.sh
     
-Version: 1.2.0   
+Version: 1.2.2   
 Made by sidbelbase.'''
     update.message.reply_text(about)
