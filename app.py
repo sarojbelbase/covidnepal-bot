@@ -9,10 +9,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 dotenvsecrets = os.path.join(basedir, '.env')
 load_dotenv(dotenvsecrets)
 
+PORT = int(os.environ.get('PORT', 5000))
 TOKEN = os.environ.get('TOKEN')
 NAME = "covidnepalbot"
 HOST = "0.0.0.0"
-PORT = 5000
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
