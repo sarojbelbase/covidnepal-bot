@@ -3,9 +3,7 @@
 	"routes": [
 		{
 			"src": "/(.*)",
-			"dest": "app.py",
-			"trailingSlash": false,
-			"headers": { "cache-control": "public, s-maxage=1, stale-while-revalidate " }
+			"dest": "app.py"
 		}
 	]
 }
