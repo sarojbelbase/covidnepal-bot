@@ -95,9 +95,9 @@ def main():
     dp.add_handler(CommandHandler("provinces", province_chooser))
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
-    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
-    updater.bot.setWebhook('https://covidnepalbot.now.sh/' + TOKEN)
-    # updater.start_polling()
+    # updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
+    # updater.bot.setWebhook('https://covidnepalbot.now.sh/' + TOKEN)
+    updater.start_polling()
 
     updater.idle()
 
