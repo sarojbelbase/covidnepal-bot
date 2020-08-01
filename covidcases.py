@@ -4,7 +4,7 @@ from utils import padding, humanize_date, humanize_local_date
 
 
 def get_province_updates(province_id):
-    url = f"https://aworkingapi.herokuapp.com/api/v1/covid/province/{int(province_id)}"
+    url = f"https://aworkingapi.now.sh/api/v1/covid/province/{int(province_id)}"
     province = requests.get(url).json()
     improved = f'''{province["name"]}'s Covid Updates:
 
@@ -72,6 +72,6 @@ def get_about(update, context):
     about = f'''Telegram bot that provides you detailed look at COVID-19 cases inside Nepal.
 Web version lives at: https://covidnepal.now.sh
     
-Version: 1.2.2   
+Version: 1.2.3   
 Made by sidbelbase.'''
     update.message.reply_text(about)

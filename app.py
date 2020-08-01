@@ -51,7 +51,7 @@ def send_help(update, context):
 /help - To get help messages
 /website - Go to website
 
-covidnepal_bot • Version 1.2.2
+covidnepal_bot • Version 1.2.3
     '''
     update.message.reply_text(help_commands)
 
@@ -70,7 +70,7 @@ Please type the following commands to get started:
 /help - To get help messages
 /website - Go to website
 
-covidnepal_bot • Version 1.2.2
+covidnepal_bot • Version 1.2.3
     '''
     update.message.reply_text(help_commands)
 
@@ -96,7 +96,7 @@ def main():
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
     updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
-    updater.bot.setWebhook('https://covidnepal-bot.herokuapp.com/' + TOKEN)
+    updater.bot.setWebhook('https://covidnepalbot.now.sh/' + TOKEN)
     # updater.start_polling()
 
     updater.idle()
