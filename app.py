@@ -9,16 +9,15 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 dotenvsecrets = os.path.join(basedir, '.env')
 load_dotenv(dotenvsecrets)
 
-PORT = int(os.environ.get('PORT', 5000))
-
+TOKEN = os.environ.get('TOKEN')
+NAME = "covidnepalbot"
+HOST = "0.0.0.0"
+PORT = 5000
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
-
-TOKEN = os.environ.get('TOKEN')
-
 
 def province_chooser(update, context):
     keyboard = [[InlineKeyboardButton("Province 1", callback_data='1'),
@@ -95,9 +94,9 @@ def main():
     dp.add_handler(CommandHandler("provinces", province_chooser))
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
-    # updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
-    # updater.bot.setWebhook('https://covidnepalbot.now.sh/' + TOKEN)
-    updater.start_polling()
+    updater.start_webhook(listen=HOST, port=PORT, url_path=TOKEN)
+    updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+    # updater.start_polling()
 
     updater.idle()
 
