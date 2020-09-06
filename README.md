@@ -2,8 +2,6 @@
 
 #### Yet another telegram bot that sends you live COVID-19 updates.
 
-<br>
-
 ### Screenshots
 
 <span align="center">
