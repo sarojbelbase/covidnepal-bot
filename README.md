@@ -1,6 +1,6 @@
 ## covidnepal-bot
 
-#### Yet another telegram bot that sends you live COVID-19 updates.
+#### A telegram bot that sends you live COVID-19 updates.
 
 ### Screenshots
 
