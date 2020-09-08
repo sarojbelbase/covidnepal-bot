@@ -9,6 +9,9 @@
 <img src="https://github.com/sidbelbase/covidnepal/raw/master/public/img/screenshot_two.jpg" width="49%" height="auto">
 </span><br>
 
+### Parent Project
+
+**[sidbelbase/covidnepal](https://github.com/sidbelbase/covidnepal)**
 
 ### Links
 
@@ -19,4 +22,4 @@
 
 <a target="_blank" href="https://documenter.getpostman.com/view/9992373/SzS7PkXr?version=latest">Postman | nepalcorona.info</a>
 
-#### Contributions are welcome &bull; Made with ❤️ in Nepal.
+#### Contributions are welcome &bull; Made with ❤️ in Nepal. 
