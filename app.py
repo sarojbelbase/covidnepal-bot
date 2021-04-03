@@ -24,7 +24,7 @@ def province_chooser(update, context):
                  InlineKeyboardButton("Province 2", callback_data='2')],
                 [InlineKeyboardButton("Bagmati Province", callback_data='3'),
                  InlineKeyboardButton("Gandaki Province", callback_data='4')],
-                [InlineKeyboardButton("Province 5", callback_data='5'),
+                [InlineKeyboardButton("Lumbini Province", callback_data='5'),
                  InlineKeyboardButton("Karnali Province", callback_data='6')],
                 [InlineKeyboardButton("Sudurpaschim Province", callback_data='7')]]
 
