@@ -61,8 +61,7 @@ def get_website(update, context):
 
 def get_about(update, context):
     about = f'''Telegram bot that provides you detailed look at COVID-19 cases inside Nepal.
-Web version lives at: https://covidnepal.sidbelbase.codes
+Web version is available at: https://covidnepal.sidbelbase.codes
     
-Version: 2.0.1   
-Made by sidbelbase.'''
+Version: 2.0.1 • Made by sidbelbase.'''
     update.message.reply_text(about)
