@@ -1,9 +1,12 @@
 import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackQueryHandler
-from covidcases import get_about, get_website, get_local_updates, get_today_updates, get_world_updates, get_province_updates
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import CallbackQueryHandler, CommandHandler, Updater
+
+from covidcases import (get_about, get_local_updates, get_province_updates,
+                        get_today_updates, get_website, get_world_updates)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 dotenvsecrets = os.path.join(basedir, '.env')
@@ -18,6 +21,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+
 
 def province_chooser(update, context):
     keyboard = [[InlineKeyboardButton("Province 1", callback_data='1'),
