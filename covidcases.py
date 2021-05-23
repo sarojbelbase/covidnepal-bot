@@ -19,18 +19,9 @@ Updated {humanize_date(province["last_updated"])}
 
 
 def get_today_updates(update, context):
-    url = 'https://covid19.mohp.gov.np/covid/api/confirmedcases'
-    updates = requests.get(url).json()["nepal"]
-    improved = f'''Today's Covid Updates:
-
-Tested : {padding(updates['today_pcr'])}
-Positive : {padding(updates['today_newcase'])}
-Recovered : {padding(updates['today_recovered'])}
-Deaths : {padding(updates['today_death'])}
-
-Updated {humanize_local_date(updates['updated_at'])}
-'''
-    update.message.reply_text(improved)
+    url = 'https://aworkingapi.herokuapp.com/api/v1/covid/today/generate'
+    updates = requests.get(url)
+    update.message.reply_photo(updates.content)
 
 
 def get_local_updates(update, context):
@@ -49,7 +40,7 @@ Updated {humanize_local_date(updates['updated_at'])}
 
 
 def get_world_updates(update, context):
-    url = 'https://data.nepalcorona.info/api/v1/world'
+    url = 'https://data.askbhunte.com/api/v1/world'
     updates = requests.get(url).json()
     improved = f'''Worldwide Covid Updates:
 
@@ -64,14 +55,14 @@ Updated {humanize_date(datetime.utcfromtimestamp(int(updates['updated']/1000)))}
 
 
 def get_website(update, context):
-    url = "https://covidnepal.now.sh"
+    url = "https://covidnepal.sidbelbase.codes"
     update.message.reply_text(url)
 
 
 def get_about(update, context):
     about = f'''Telegram bot that provides you detailed look at COVID-19 cases inside Nepal.
-Web version lives at: https://covidnepal.now.sh
+Web version lives at: https://covidnepal.sidbelbase.codes
     
-Version: 1.2.3   
+Version: 2.0.1   
 Made by sidbelbase.'''
     update.message.reply_text(about)
