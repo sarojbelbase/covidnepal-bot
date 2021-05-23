@@ -12,7 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 dotenvsecrets = os.path.join(basedir, '.env')
 load_dotenv(dotenvsecrets)
 
-PORT = int(os.environ.get('PORT', 5000))
+PORT = int(os.environ.get('PORT', '8443'))
 TOKEN = os.environ.get('TOKEN')
 NAME = "covidnepalbot"
 HOST = "0.0.0.0"
@@ -44,36 +44,36 @@ def send_province(update, context):
 
 
 def send_help(update, context):
-    help_commands = f'''Type the following commands to get started:
+    help_commands = f'''Type or click the following commands to get started:
 
-/updates - Get local updates
+/updates - Get whole nepal updates
 /provinces - Get province updates
 /today - Get today's updates
-/worldwide - Get worldwide updates
+/worldwide - Get global updates
 /about - About this bot
 /help - To get help messages
-/website - Go to website
+/website - Go to our official website
 
-covidnepal_bot • Version 1.2.3
-    '''
+covidnepal_bot • Version 2.0.1 • Made by sidbelbase.
+'''
     update.message.reply_text(help_commands)
 
 
 def start(update, context):
     user = update.message.from_user.first_name
-    help_commands = f'''Hello {user}, Welcome to covidnepal.
+    help_commands = f'''Hello {user}, Welcome to covidnepal_bot.
 
-Please type the following commands to get started:
+Type or click the following commands to get started:
 
-/updates - Get local updates
+/updates - Get whole nepal updates
 /provinces - Get province updates
 /today - Get today's updates
-/worldwide - Get worldwide updates
+/worldwide - Get global updates
 /about - About this bot
 /help - To get help messages
-/website - Go to website
+/website - Go to our official website
 
-covidnepal_bot • Version 1.2.3
+covidnepal_bot • Version 2.0.1 • Made by sidbelbase.
     '''
     update.message.reply_text(help_commands)
 
@@ -98,8 +98,12 @@ def main():
     dp.add_handler(CommandHandler("provinces", province_chooser))
     dp.add_handler(CommandHandler("worldwide", get_world_updates))
 
-    updater.start_webhook(listen=HOST, port=PORT, url_path=TOKEN)
-    updater.bot.setWebhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+    updater.start_webhook(
+        listen=HOST,
+        port=PORT,
+        url_path=TOKEN,
+        webhook_url=f"https://{NAME}.herokuapp.com/{TOKEN}"
+    )
     # updater.start_polling()
 
     updater.idle()
