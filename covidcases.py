@@ -4,7 +4,7 @@ from utils import padding, humanize_date, humanize_local_date
 
 
 def get_province_updates(province_id):
-    url = f"https://aworkingapi.now.sh/api/v1/covid/province/{int(province_id)}"
+    url = f"https://api.sarojbelbase.com.np/api/v1/covid/province/{int(province_id)}"
     province = requests.get(url).json()
     improved = f'''{province["name"]}'s Covid Updates:
 
@@ -19,7 +19,7 @@ Updated {humanize_date(province["last_updated"])}
 
 
 def get_today_updates(update, context):
-    url = 'https://aworkingapi.herokuapp.com/api/v1/covid/today/generate'
+    url = 'https://api.sarojbelbase.com.np/api/v1/covid/today/generate'
     updates = requests.get(url)
     update.message.reply_photo(updates.content)
 
