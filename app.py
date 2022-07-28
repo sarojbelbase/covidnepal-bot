@@ -1,7 +1,5 @@
 import logging
-import os
 
-from dotenv import load_dotenv
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackQueryHandler, CommandHandler, Updater
 
