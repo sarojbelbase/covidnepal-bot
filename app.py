@@ -7,15 +7,7 @@ from telegram.ext import CallbackQueryHandler, CommandHandler, Updater
 
 from covidcases import (get_about, get_local_updates, get_province_updates,
                         get_today_updates, get_website, get_world_updates)
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-dotenvsecrets = os.path.join(basedir, '.env')
-load_dotenv(dotenvsecrets)
-
-PORT = int(os.environ.get('PORT', '8443'))
-TOKEN = os.environ.get('TOKEN')
-NAME = "covidnepalbot"
-HOST = "0.0.0.0"
+from const import *
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -102,10 +94,10 @@ def main():
         listen=HOST,
         port=PORT,
         url_path=TOKEN,
-        webhook_url=f"https://{NAME}.herokuapp.com/{TOKEN}"
+        webhook_url=WEBHOOK_URL
     )
-    # updater.start_polling()
 
+    # updater.start_polling()
     updater.idle()
 
 
